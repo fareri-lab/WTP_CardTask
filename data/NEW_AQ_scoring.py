@@ -74,9 +74,9 @@ aq_score["AQ_score"] = aq_score.sum(axis=1)
 aq_score.insert (0, "prolific_ID", alldata["dem_ID"])       
 aq_score.to_csv("wtp_aq_scores.csv" , index=False)
 
-#ALLalldata = pd.read_excel(r'wtp_taskdata_NEW.xlsx')
-#ALLalldata = pd.read_csv(r'new_pilot_wtp.csv')
-ALLalldata = pd.read_csv(r'updated_allwtp.csv')
-ALLalldata['AQ'] = aq_score["AQ_score"]
-ALLalldata.to_csv("updated_allwtp.csv")
-#ALLalldata.to_excel("wtp_taskdata_NEW.xlsx" , index=False)
+#pd.read_excel(r'wtp_taskdata_NEW.xlsx')
+#pd.read_csv(r'new_pilot_wtp.csv')
+complete_data = pd.read_csv(r'updated_allwtp.csv')
+complete_data['AQ'] = aq_score["AQ_score"]
+complete_data.to_csv("updated_allwtp.csv")
+#.to_excel("wtp_taskdata_NEW.xlsx" , index=False)

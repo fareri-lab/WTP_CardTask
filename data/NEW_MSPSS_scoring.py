@@ -44,7 +44,7 @@ MSPSS_score["total_score"] = MSPSS_score.sum(axis=1)/12
     
 MSPSS_score.to_csv("MSPSS_scores.csv" , index=False)
 
-#ALLalldata = pd.read_csv(r'new_pilot_wtp.csv')
-ALLalldata = pd.read_csv(r'updated_allwtp.csv')
-ALLalldata['MSPSS'] = MSPSS_score["total_score"]
-ALLalldata.to_csv('updated_allwtp.csv', index=False)
+#pd.read_csv(r'new_pilot_wtp.csv')
+complete_data = pd.read_csv(r'updated_allwtp.csv')
+complete_data['MSPSS'] = MSPSS_score["total_score"]
+complete_data.to_csv('updated_allwtp.csv', index=False)
