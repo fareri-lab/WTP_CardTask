@@ -20,12 +20,14 @@ library(sjPlot)
 ```{r}
 glm1<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS+(1|subid), data=WTPdata, family = binomial(link = "logit"))
 
-glm2<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS+AQ+(1|subid), data=WTPdata, family = binomial(link = "logit"))
+glm2<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"))
 
-glm3<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS+AQ+IRI_EC_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+glm3<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_EC_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
 
 glm4<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+MSPSS_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
 
 glm5<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm6<-glmer(exp_chosen~social_money+nonsocial_money+IRI_EC_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"))
 ```
 
