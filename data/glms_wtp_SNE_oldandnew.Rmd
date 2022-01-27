@@ -72,5 +72,7 @@ plot_model(model=glm2,type="int")
 plot_model(model=glm3,type="int")
 plot_model(model=glm4,type="int")
 plot_model(model=glm5,type="int")
+
+plot_model(model=olddata_glm4,type="int")
 ```
 
