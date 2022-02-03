@@ -24,11 +24,11 @@ new_WTPdata$IRI_PT_MC<-new_WTPdata$IRI_PT-mean(new_WTPdata$IRI_PT)
 new_WTPdata$RSE_MC<-new_WTPdata$RSE_MC-mean(new_WTPdata$RSE_MC)
 ```{r}
 #set working directory
-setwd('/Users/melziur/Desktop/scoring_wtp/ALL_WTP_MASTER.csv')
-new_WTPdata<-read.csv(file='wtpdata_long_format.csv',header = TRUE,sep = ',')
+setwd('~/Desktop/R_files/')
+new_WTPdata<-read.csv(file='BALANCED_longformat.csv',header = TRUE,sep = ',')
 library(lme4)
 library(lmerTest)
-#library(sjPlot)
+# library(sjPlot)
 ```
 ```
 ```{r}
@@ -50,12 +50,12 @@ glm8<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+MSPSS_MC+(1|subid), da
 
 glm9<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
 
-glm10<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+glm10<-glmer(exp_chosen~nonsocial_money+social_money*IRI_EC_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
 ```
 
 ```{r}
 
-old_WTPdata<-read.csv(file='UNBALANCED_wtp_LONG.csv',header = TRUE,sep = ',')
+old_WTPdata<-read.csv(file='UNBALANCED_longformat.csv',header = TRUE,sep = ',')
 ```
 
 
@@ -68,6 +68,10 @@ old_WTPdata$IRI_EC_MC<-NA
 old_WTPdata$MSPSS_MC<-old_WTPdata$MSPSS-mean(old_WTPdata$MSPSS)
 old_WTPdata$AQ_MC<-old_WTPdata$AQ-mean(old_WTPdata$AQ)
 old_WTPdata$IRI_EC_MC<-old_WTPdata$IRI_EC-mean(old_WTPdata$IRI_EC)
+old_WTPdata$IRI_FS_MC<-old_WTPdata$IRI_FS-mean(old_WTPdata$IRI_FS)
+old_WTPdata$IRI_PD_MC<-old_WTPdata$IRI_PD-mean(old_WTPdata$IRI_PD)
+old_WTPdata$IRI_PT_MC<-old_WTPdata$IRI_PT-mean(old_WTPdata$IRI_PT)
+old_WTPdata$RSE_MC<-old_WTPdata$RSE_MC-mean(old_WTPdata$RSE_MC)
 ```
 
 ```{r}
@@ -77,9 +81,20 @@ olddata_glm2<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+(1|su
 
 olddata_glm3<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_EC_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
 
-olddata_glm4<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+MSPSS_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+olddata_glm4<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_FS_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
 
-olddata_glm5<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+olddata_glm5<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_PD_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+olddata_glm6<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_PT_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+olddata_glm7<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+RSE_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+olddata_glm8<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+MSPSS_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+olddata_glm9<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+olddata_glm10<-glmer(exp_chosen~nonsocial_money+social_money*IRI_EC_MC+social_money*MSPSS_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
 ```
 
 ```{r}
@@ -93,5 +108,5 @@ olddata_glm5<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*M
 
 
 <!-- plot_model(model=olddata_glm4,type="int") -->
-<!-- ``` -->
+```
 
