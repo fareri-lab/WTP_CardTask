@@ -1,0 +1,97 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+import 
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+new_WTPdata$MSPSS_MC<-NA 
+new_WTPdata$AQ_MC<-NA
+new_WTPdata$IRI_EC_MC<-NA
+new_WTPdata$IRI_FS_MC<-NA
+new_WTPdata$IRI_PD_MC<-NA
+new_WTPdata$IRI_PT_MC<-NA
+new_WTPdata$RSE_MC<-NA
+
+new_WTPdata$MSPSS_MC<-new_WTPdata$MSPSS-mean(new_WTPdata$MSPSS)
+new_WTPdata$AQ_MC<-new_WTPdata$AQ-mean(new_WTPdata$AQ)
+new_WTPdata$IRI_EC_MC<-new_WTPdata$IRI_EC-mean(new_WTPdata$IRI_EC)
+new_WTPdata$IRI_FS_MC<-new_WTPdata$IRI_FS-mean(new_WTPdata$IRI_FS)
+new_WTPdata$IRI_PD_MC<-new_WTPdata$IRI_PD-mean(new_WTPdata$IRI_PD)
+new_WTPdata$IRI_PT_MC<-new_WTPdata$IRI_PT-mean(new_WTPdata$IRI_PT)
+new_WTPdata$RSE_MC<-new_WTPdata$RSE_MC-mean(new_WTPdata$RSE_MC)
+```{r}
+#set working directory
+setwd('/Users/melziur/Desktop/scoring_wtp/ALL_WTP_MASTER.csv')
+new_WTPdata<-read.csv(file='wtpdata_long_format.csv',header = TRUE,sep = ',')
+library(lme4)
+library(lmerTest)
+#library(sjPlot)
+```
+```
+```{r}
+glm1<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS+(1|subid), data=new_WTPdata, family = binomial(link = "logit"))
+
+glm2<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"))
+
+glm3<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_EC_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm4<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_FS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm5<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_PD_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm6<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_PT_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm7<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+RSE_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm8<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm9<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm10<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+```
+
+```{r}
+
+old_WTPdata<-read.csv(file='UNBALANCED_wtp_LONG.csv',header = TRUE,sep = ',')
+```
+
+
+```{r}
+
+old_WTPdata$MSPSS_MC<-NA
+old_WTPdata$AQ_MC<-NA
+old_WTPdata$IRI_EC_MC<-NA
+
+old_WTPdata$MSPSS_MC<-old_WTPdata$MSPSS-mean(old_WTPdata$MSPSS)
+old_WTPdata$AQ_MC<-old_WTPdata$AQ-mean(old_WTPdata$AQ)
+old_WTPdata$IRI_EC_MC<-old_WTPdata$IRI_EC-mean(old_WTPdata$IRI_EC)
+```
+
+```{r}
+olddata_glm1<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"))
+
+olddata_glm2<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"))
+
+olddata_glm3<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_EC_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+olddata_glm4<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+MSPSS_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+olddata_glm5<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=old_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+```
+
+```{r}
+<!-- #plot_model(model=glm5,type="pred") -->
+
+<!-- plot_model(model=glm1,type="int") -->
+<!-- plot_model(model=glm2,type="int") -->
+<!-- plot_model(model=glm3,type="int") -->
+<!-- plot_model(model=glm4,type="int") -->
+<!-- plot_model(model=glm5,type="int") -->
+
+
+<!-- plot_model(model=olddata_glm4,type="int") -->
+<!-- ``` -->
+
