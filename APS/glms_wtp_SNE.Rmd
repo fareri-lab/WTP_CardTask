@@ -1,0 +1,50 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+
+```{r}
+#set working directory
+#setwd('/Users/melziur/Desktop/R_files/')
+WTPdata<-read.csv(file='/Users/melziur/Desktop/scoring_wtp/ALL_WTP_MASTER.csv',header = TRUE,sep = ',')
+library(lme4)
+library(lmerTest)
+library(sjPlot)
+```
+```
+```{r}
+glm1<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS+(1|subid), data=WTPdata, family = binomial(link = "logit"))
+
+glm2<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"))
+
+glm3<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_EC_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm4<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+MSPSS_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm5<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm6<-glmer(exp_chosen~social_money+nonsocial_money+IRI_EC_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"))
+
+glm7<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_FS_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm8<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_PD_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm9<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_PT_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm10<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+RSE_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm11<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+MSPSS_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm12<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm13<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+```
+
+
+```
+
