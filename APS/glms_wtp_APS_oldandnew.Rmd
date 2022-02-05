@@ -21,14 +21,14 @@ new_WTPdata$IRI_EC_MC<-new_WTPdata$IRI_EC-mean(new_WTPdata$IRI_EC)
 new_WTPdata$IRI_FS_MC<-new_WTPdata$IRI_FS-mean(new_WTPdata$IRI_FS)
 new_WTPdata$IRI_PD_MC<-new_WTPdata$IRI_PD-mean(new_WTPdata$IRI_PD)
 new_WTPdata$IRI_PT_MC<-new_WTPdata$IRI_PT-mean(new_WTPdata$IRI_PT)
-new_WTPdata$RSE_MC<-new_WTPdata$RSE_MC-mean(new_WTPdata$RSE_MC)
+new_WTPdata$RSE_MC<-new_WTPdata$RSE_MC-mean(new_WTPdata$RSE)
 ```{r}
 #set working directory
 setwd('~/Desktop/R_files/')
 new_WTPdata<-read.csv(file='BALANCED_longformat.csv',header = TRUE,sep = ',')
 library(lme4)
 library(lmerTest)
-# library(sjPlot)
+library(sjPlot)
 ```
 ```
 ```{r}
@@ -44,13 +44,16 @@ glm5<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_PD_MC+(1|
 
 glm6<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+IRI_PT_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
 
-glm7<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+RSE_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+<!-- glm7<-glmer(exp_chosen~social_money+nonsocial_money+MSPSS_MC+AQ_MC+RSE_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa")) -->
 
-glm8<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+glm7<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
 
-glm9<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+glm8<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
 
-glm10<-glmer(exp_chosen~nonsocial_money+social_money*IRI_EC_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+glm9<-glmer(exp_chosen~nonsocial_money+social_money*IRI_EC_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+glm10<-glmer(exp_chosen~nonsocial_money+social_money*IRI_PT_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+glm11<-glmer(exp_chosen~nonsocial_money+social_money*IRI_PD_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+glm12<-glmer(exp_chosen~nonsocial_money+social_money*IRI_FS_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
 ```
 
 ```{r}
@@ -98,15 +101,15 @@ olddata_glm10<-glmer(exp_chosen~nonsocial_money+social_money*IRI_EC_MC+social_mo
 ```
 
 ```{r}
-<!-- #plot_model(model=glm5,type="pred") -->
+#plot_model(model=glm5,type="pred")
 
-<!-- plot_model(model=glm1,type="int") -->
-<!-- plot_model(model=glm2,type="int") -->
-<!-- plot_model(model=glm3,type="int") -->
-<!-- plot_model(model=glm4,type="int") -->
-<!-- plot_model(model=glm5,type="int") -->
+plot_model(model=glm1,type="int")
+plot_model(model=glm2,type="int")
+plot_model(model=glm3,type="int")
+plot_model(model=glm4,type="int")
+plot_model(model=glm5,type="int")
 
 
-<!-- plot_model(model=olddata_glm4,type="int") -->
+plot_model(model=olddata_glm4,type="int")
 ```
 
