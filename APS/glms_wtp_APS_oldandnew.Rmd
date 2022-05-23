@@ -28,7 +28,7 @@ setwd('~/Desktop/R_files/')
 new_WTPdata<-read.csv(file='BALANCED_longformat.csv',header = TRUE,sep = ',')
 library(lme4)
 library(lmerTest)
-# library(sjPlot)
+library(sjPlot)
 ```
 ```
 ```{r}
@@ -51,6 +51,9 @@ glm8<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+MSPSS_MC+(1|subid), da
 glm9<-glmer(exp_chosen~nonsocial_money+social_money*AQ_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
 
 glm10<-glmer(exp_chosen~nonsocial_money+social_money*IRI_EC_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
+glm11<-glmer(exp_chosen~nonsocial_money+AQ_MC+social_money*MSPSS_MC+(1|subid), data=new_WTPdata, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+
 ```
 
 ```{r}
