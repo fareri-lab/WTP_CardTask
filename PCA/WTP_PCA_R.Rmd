@@ -1,5 +1,5 @@
 ---
-title: "WTP - LMER w/ PCA"
+title: "WTP - GLMER w/ PCA"
 output: html_document
 date: "2022-08-12"
 ---
@@ -16,23 +16,23 @@ library(lmerTest)
 
 ## PCs
 ```{r PC1}
-# PC1 LMER model in R
-PC1<-lmer('exp_chosen ~ PC1  + (1|subid)', data=data)
+# PC1 GLMER model in R
+PC1<-glmer('exp_chosen ~ PC1  + (1|subid)', data=data, family = binomial)
 summary(PC1)
 ```
 
 
 ```{r PC1 + PC2}
-# PC1/PC2 LMER model in R
-PC1_2<-lmer('exp_chosen ~ PC1 + PC2 + (1|subid)', data=data)
+# PC1/PC2 GLMER model in R
+PC1_2<-glmer('exp_chosen ~ PC1 + PC2 + (1|subid)', data=data, family = binomial)
 summary(PC1_2)
 
 ```
 
 
 ```{r PC1+ PC2+ PC3}
-# PC1/PC2/PC3 LMER model in R
-PC1_2_3<-lmer('exp_chosen ~ PC1 + PC2 + PC3 + (1|subid)', data=data)
+# PC1/PC2/PC3 GLMER model in R
+PC1_2_3<-glmer('exp_chosen ~ PC1 + PC2 + PC3 + (1|subid)', data=data, family = binomial)
 summary(PC1_2_3)
 
 ```

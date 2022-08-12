@@ -12,7 +12,7 @@
 
 <meta name="date" content="2022-08-12" />
 
-<title>WTP - LMER w/ PCA</title>
+<title>WTP - GLMER w/ PCA</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -362,7 +362,7 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">WTP - LMER w/ PCA</h1>
+<h1 class="title toc-ignore">WTP - GLMER w/ PCA</h1>
 <h4 class="date">2022-08-12</h4>
 
 </div>
@@ -370,102 +370,105 @@ pre code {
 
 <div id="pcs" class="section level2">
 <h2>PCs</h2>
-<pre class="r"><code># PC1 LMER model in R
-PC1&lt;-lmer(&#39;exp_chosen ~ PC1  + (1|subid)&#39;, data=data)
+<pre class="r"><code># PC1 GLMER model in R
+PC1&lt;-glmer(&#39;exp_chosen ~ PC1  + (1|subid)&#39;, data=data, family = binomial)
 summary(PC1)</code></pre>
-<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
-## lmerModLmerTest]
-## Formula: &quot;exp_chosen ~ PC1  + (1|subid)&quot;
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: binomial  ( logit )
+## Formula: exp_chosen ~ PC1 + (1 | subid)
 ##    Data: data
 ## 
-## REML criterion at convergence: 15881.2
+##      AIC      BIC   logLik deviance df.resid 
+##  15124.9  15147.0  -7559.5  15118.9    11346 
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -1.7808 -0.9991  0.4570  0.9519  1.7688 
+## -2.3431 -0.9581  0.5312  0.9162  2.3071 
 ## 
 ## Random effects:
-##  Groups   Name        Variance Std.Dev.
-##  subid    (Intercept) 0.01509  0.1228  
-##  Residual             0.23020  0.4798  
+##  Groups Name        Variance Std.Dev.
+##  subid  (Intercept) 0.2952   0.5434  
 ## Number of obs: 11349, groups:  subid, 226
 ## 
 ## Fixed effects:
-##               Estimate Std. Error         df t value Pr(&gt;|t|)    
-## (Intercept)   0.513297   0.009335 223.297026  54.987  &lt; 2e-16 ***
-## PC1          -0.028495   0.003830 223.559564  -7.441 2.14e-12 ***
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  0.05436    0.04118   1.320    0.187    
+## PC1         -0.12613    0.01702  -7.413 1.24e-13 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Correlation of Fixed Effects:
 ##     (Intr)
-## PC1 0.000</code></pre>
-<pre class="r"><code># PC1/PC2 LMER model in R
-PC1_2&lt;-lmer(&#39;exp_chosen ~ PC1 + PC2 + (1|subid)&#39;, data=data)
+## PC1 0.001</code></pre>
+<pre class="r"><code># PC1/PC2 GLMER model in R
+PC1_2&lt;-glmer(&#39;exp_chosen ~ PC1 + PC2 + (1|subid)&#39;, data=data, family = binomial)
 summary(PC1_2)</code></pre>
-<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
-## lmerModLmerTest]
-## Formula: &quot;exp_chosen ~ PC1 + PC2 + (1|subid)&quot;
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: binomial  ( logit )
+## Formula: exp_chosen ~ PC1 + PC2 + (1 | subid)
 ##    Data: data
 ## 
-## REML criterion at convergence: 15888.3
+##      AIC      BIC   logLik deviance df.resid 
+##  15125.4  15154.7  -7558.7  15117.4    11345 
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -1.7844 -1.0014  0.4535  0.9565  1.7651 
+## -2.3531 -0.9601  0.5292  0.9192  2.2908 
 ## 
 ## Random effects:
-##  Groups   Name        Variance Std.Dev.
-##  subid    (Intercept) 0.01504  0.1226  
-##  Residual             0.23020  0.4798  
+##  Groups Name        Variance Std.Dev.
+##  subid  (Intercept) 0.2925   0.5408  
 ## Number of obs: 11349, groups:  subid, 226
 ## 
 ## Fixed effects:
-##               Estimate Std. Error         df t value Pr(&gt;|t|)    
-## (Intercept)   0.513292   0.009322 222.315348  55.061  &lt; 2e-16 ***
-## PC1          -0.028495   0.003824 222.577596  -7.451 2.03e-12 ***
-## PC2          -0.006200   0.004875 222.400424  -1.272    0.205    
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  0.05439    0.04103   1.326    0.185    
+## PC1         -0.12611    0.01695  -7.438 1.02e-13 ***
+## PC2         -0.02674    0.02145  -1.246    0.213    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Correlation of Fixed Effects:
 ##     (Intr) PC1  
 ## PC1 0.000       
-## PC2 0.000  0.000</code></pre>
-<pre class="r"><code># PC1/PC2/PC3 LMER model in R
-PC1_2_3&lt;-lmer(&#39;exp_chosen ~ PC1 + PC2 + PC3 + (1|subid)&#39;, data=data)
+## PC2 0.000  0.002</code></pre>
+<pre class="r"><code># PC1/PC2/PC3 GLMER model in R
+PC1_2_3&lt;-glmer(&#39;exp_chosen ~ PC1 + PC2 + PC3 + (1|subid)&#39;, data=data, family = binomial)
 summary(PC1_2_3)</code></pre>
-<pre><code>## Linear mixed model fit by REML. t-tests use Satterthwaite&#39;s method [
-## lmerModLmerTest]
-## Formula: &quot;exp_chosen ~ PC1 + PC2 + PC3 + (1|subid)&quot;
+<pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
+##   Approximation) [glmerMod]
+##  Family: binomial  ( logit )
+## Formula: exp_chosen ~ PC1 + PC2 + PC3 + (1 | subid)
 ##    Data: data
 ## 
-## REML criterion at convergence: 15883.3
+##      AIC      BIC   logLik deviance df.resid 
+##  15112.6  15149.3  -7551.3  15102.6    11344 
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -1.8152 -1.0044  0.4437  0.9546  1.7595 
+## -2.4698 -0.9640  0.5224  0.9176  2.2655 
 ## 
 ## Random effects:
-##  Groups   Name        Variance Std.Dev.
-##  subid    (Intercept) 0.01396  0.1181  
-##  Residual             0.23020  0.4798  
+##  Groups Name        Variance Std.Dev.
+##  subid  (Intercept) 0.2699   0.5195  
 ## Number of obs: 11349, groups:  subid, 226
 ## 
 ## Fixed effects:
-##               Estimate Std. Error         df t value Pr(&gt;|t|)    
-## (Intercept)   0.513247   0.009063 221.494968  56.633  &lt; 2e-16 ***
-## PC1          -0.028498   0.003718 221.777906  -7.665 5.55e-13 ***
-## PC2          -0.006183   0.004739 221.588978  -1.305 0.193328    
-## PC3           0.019740   0.005267 221.201969   3.748 0.000228 ***
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  0.05406    0.03979   1.359    0.174    
+## PC1         -0.12640    0.01646  -7.680 1.59e-14 ***
+## PC2         -0.02691    0.02081  -1.293    0.196    
+## PC3          0.09038    0.02322   3.893 9.90e-05 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Correlation of Fixed Effects:
 ##     (Intr) PC1    PC2   
 ## PC1  0.000              
-## PC2  0.000  0.000       
-## PC3 -0.001  0.000  0.001</code></pre>
+## PC2  0.000  0.002       
+## PC3 -0.003 -0.013 -0.003</code></pre>
 </div>
 
 
