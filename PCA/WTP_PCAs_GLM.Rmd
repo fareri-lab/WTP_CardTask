@@ -1,0 +1,86 @@
+---
+title: "WTP_PCAs_GLM"
+output: html_document
+date: "2023-05-18"
+---
+
+```{r setup, include=FALSE}
+#set working directory
+
+#data <- read.csv(file = '/Users/melanieruiz/Google Drive/My Drive/WTP_data/WTP_LONG_ALL.csv')
+data <- read.csv(file = '/Users/melanieruiz/Google Drive/My Drive/WTP_data/WTP_LONG_UPDATED.csv')
+
+short_data <- read.csv(file = '/Users/melanieruiz/Google Drive/My Drive/WTP_data/WTP_master_SHORT.csv')
+short_data <- subset(short_data, phase== 1)
+# load LMER libraries
+library(lme4)
+library(lmerTest)
+library(sjPlot)
+```
+
+## PC1
+
+
+```{r PC1 LMER model in R}
+PC1= glmer('exp_chosen ~ PC1  + (1|subid)', data=data, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+summary(PC1)
+
+```
+```{r PC1 plot}
+plot_model(model=PC1,type="pred")
+```
+
+## PC1/ PC2
+
+```{r PC1/PC2 LMER model in R}
+PC1_2<-glmer('exp_chosen ~ PC1 + PC2 + (1|subid)', data=data, family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa"))
+summary(PC1_2)
+```
+
+```{r PC1/PC2 plot}
+plot_model(model=PC1_2,type="pred")
+```
+
+## PC1/ PC2/ PC3
+
+```{r PC1/PC2/PC3 LMER model in R}
+
+PC1_2_3<-glmer('exp_chosen ~ PC1 + PC2 + PC3 + (1|subid)', data=data,family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa") )
+summary(PC1_2_3)
+
+```
+
+
+## PC1/ PC2/ PC3 + age
+
+```{r PC1/PC2/PC3/age LMER model in R}
+PC1_2_3_age<-glmer('exp_chosen ~ PC1 + PC2 + PC3 + dem_AGE + (1|subid)', data=data,family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa") )
+summary(PC1_2_3_age)
+
+```
+
+```{r PC1/PC2/PC3/age plot}
+plot_model(model=PC1_2_3_age,type="pred")
+```
+
+
+```{r PC1/PC2/PC3/age/gender LMER model in R}
+PC1_2_3_age_gender<-glmer('exp_chosen ~ PC1 + PC2 + PC3 + dem_AGE + dem_GENDER + (1|subid)', data=data,family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa") )
+summary(PC1_2_3_age_gender)
+```
+
+```{r PC1/PC2/PC3/age/gender/RT LMER model in R}
+PC1_2_3_age_gender_RT <-glmer('exp_chosen ~ PC1 + PC2 + PC3 + dem_AGE + dem_GENDER + reaction_time + (1|subid)', data=data,family = binomial(link = "logit"),control=glmerControl(optimizer="bobyqa") )
+summary(PC1_2_3_age_gender_RT)
+```
+
+
+```{plot PC1_2_3_age_gender_RT }
+plot_model(model=PC1_2_3_age_gender_RT,type="pred")
+
+``` 
+
+```{r PC1/PC2/PC3/age/gender/RT/totalspentsocial/nonsocial LMER model in R}
+PC1_2_3_age_gender_RT_totalspent <-lmer('total_spent_social ~ PC1 + PC2 + PC3 + dem_AGE + dem_GENDER + reaction_time + (1|subid)', data=data,control=lmerControl(optimizer="bobyqa"))
+summary(PC1_2_3_age_gender_RT_totalspent)
+```
